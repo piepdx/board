@@ -5,7 +5,7 @@ var express = require('express')
   , sessions = require('cookie-sessions');
 
 
-var config = {}
+config = {}
 
 function loadConfig() {
   var env = process.env.NODE_ENV || 'development'
