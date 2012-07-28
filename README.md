@@ -18,3 +18,9 @@ Ideas
 - Pull in Twitter, Instagram via tags, and @piepdx feeds
 - Hubot, w either Grove.io or flowdock.com adapters
 - countdown
+
+Running
+======================
+
+
+supervisor -w app.js,routes  app.js
