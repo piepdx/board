@@ -23,7 +23,9 @@
           data.results.forEach(function(r){
             if (r.text) {
               r.text2 = twitterlib.expandLinks(r)
+              r.text2 = twitterlib.ify.link(r.text2)
               r.text2 = twitterlib.ify.at(r.text2)
+              r.text2 = twitterlib.ify.hash(r.text2)
             }
           })
         }
