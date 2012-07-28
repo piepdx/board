@@ -53,6 +53,12 @@ app.get('/api/tweets', mw, function(req, res) {
   res.send(pieTwData);
 });
 
+app.get('/schedule', mw, function(req, res) {
+  //res.render("dash", pl.extend(req.context,{}) );
+  util.log(util.inspect(req.context))
+  res.render("schedule", req.context);
+});
+
 app.get('/', mw, function(req, res) {
   //res.render("dash", pl.extend(req.context,{}) );
   util.log(util.inspect(req.context))
