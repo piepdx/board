@@ -14,23 +14,29 @@
 <script>
   $(document).ready(function(){
 
-    var data = {days:0,hours:0,minutes:0,seconds:0}
-      , epochDate = new Date("5 October, 2012")
+    // a CountDown function to calculate days, hours, minutes, seconds remaining
+    var makeCountDown = function(countDownDate, cb) {
+      var data = {days:0,hours:0,minutes:0,seconds:0}
+      , epochDate = new Date(countDownDate)
       , epoch = epochDate.getTime()
 
-    var cd = function() {
-      var today  = new Date()
-        , todayEpoch  = today.getTime()
-        , sd = (epoch - todayEpoch) / 1000
+      return function() {
+        var today  = new Date()
+          , todayEpoch  = today.getTime()
+          , sd = (epoch - todayEpoch) / 1000
 
-      data.days = Math.floor(sd / (60*60*24) )
-      data.hours = Math.floor((sd / (60*60)) - (data.days * 24) )
-      data.minutes = Math.floor( ( sd / 60) - (data.days * 24 * 60) - (data.hours * 60))
-      data.seconds = Math.floor(sd - (data.days * 24 * 60 * 60) - (data.hours * 60 * 60) - (data.minutes * 60))
+        data.days = Math.floor(sd / (60*60*24) )
+        data.hours = Math.floor((sd / (60*60)) - (data.days * 24) )
+        data.minutes = Math.floor( ( sd / 60) - (data.days * 24 * 60) - (data.hours * 60))
+        data.seconds = Math.floor(sd - (data.days * 24 * 60 * 60) - (data.hours * 60 * 60) - (data.minutes * 60))
 
+        cb(data)
+      }
+    }
+    
+    setInterval(makeCountDown("5 October, 2012",function(data){
       var html = pie.mtoHtml("#mus_schedule", data)
       $("#countdown").html(html)
-    }
-    setInterval(cd,1000);
+    }),1000);
   })
 </script>

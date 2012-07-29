@@ -1,0 +1,10 @@
+{
+    "name":"piepdxb1"
+    ,"secretkey":"25rt56g"
+    , "twitter" : {
+    	"consumerkey":"key"
+    	,"consumersecret":"secret"
+    	,"accesskey":"key"
+    	,"accesssecret":"secret"
+    }
+}
