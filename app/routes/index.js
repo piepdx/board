@@ -35,7 +35,7 @@ function mw(req,res,next){
 // hook up to socket.io
 io.sockets.on('connection', function (socket) {
   // emit initial useless event
-  socket.emit('event', { event:"hello", text: 'hello world' });
+  socket.emit('events', { event:"hello", text: 'hello world' });
 });
 
 /*

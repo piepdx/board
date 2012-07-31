@@ -1,8 +1,8 @@
 // a sample plugin
 (function(win,doc,pie) {
-  var test_mustache = '<div>{{text}</div>'
+  var test_mustache = '<div>{{text}}</div>'
 
-  pie.plugin("test", "test", function(data) {
+  pie.addPlugin("hello", "hello", function(data) {
     // do what you want
     var html=  Mustache.to_html(test_mustache, data)
     $("#schedule").append(html)
