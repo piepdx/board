@@ -12,6 +12,7 @@
 
 <div id="tweets">
 </div>
+<script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
 <script>
   $(document).ready(function(){
     $.ajax({
@@ -24,14 +25,16 @@
             if (r.text) {
               r.text2 = twitterlib.expandLinks(r)
               r.text2 = twitterlib.ify.link(r.text2)
-              r.text2 = twitterlib.ify.at(r.text2)
-              r.text2 = twitterlib.ify.hash(r.text2)
+              //r.text2 = twitterlib.ify.at(r.text2)
+              //r.text2 = twitterlib.ify.hash(r.text2)
             }
           })
         }
         var html = pie.mtoHtml("#mus_tweets", data);
         console.log(html)
         $("#tweets").html(html)
+        // be careful with this, we are limited/month
+        //$('#tweets').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
       }
     });
   })

@@ -9,19 +9,35 @@
     , cache = {}
     , socket = undefined
     , templates = {}
+    , plugins  = {}
 
   var pie = pie || {}
   win.pie = pie;
 
 
+  /**
+   * The Socket.IO connection
+  */
   pie.connect = function(host) {
     socket = io.connect(host);
-
-
-    socket.on('news', function (data) {
+    socket.on('events', function (data) {
       console.log(data);
-      socket.emit('my other event', { my: 'data' });
+      _.each(plugins,function(o){
+        if (data.event == o.pattern) {
+          o.handler(data)
+        }
+      })
+      //socket.emit('my other event', { my: 'data' });
     });
+  }
+
+  /**
+   * the pie plugin handler, this will allow you to listen for *pattern*
+   *  in hubot or twitter stream
+  */
+  pie.addPlugin = function(name, pattern, handler) {
+    // need to compile regex pattern?   
+    plugins[name] = {pattern:pattern,handler:handler}
   }
 
   // mustache to html templating meomozing templates
@@ -33,9 +49,9 @@
           templates[name] = $el[0].innerHTML;
         }
       }
-       if (name in templates){
-         return Mustache.to_html(templates[name], data)
-       }
+      if (name in templates){
+        return Mustache.to_html(templates[name], data)
+      }
     } catch (e) {
       console.log("error in templating " + name)
     }

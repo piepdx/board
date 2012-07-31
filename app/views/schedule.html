@@ -1,15 +1,8 @@
-<!-- tweets-->
-<script id="mus_schedule" type="text/x-mustache">
+<!-- different sections, css determines layout -->
 
-  <span id="days">D:{{days}}</span>
-  <span id="hours">H:{{hours}}</span>
-  <span id="minutes">M:{{minutes}}</span>
-  <span id="seconds">S:{{seconds}}</span>
-
-</script>
-
-
+<div id="tbd"></div>
 <div id="countdown"></div>
+<div id="schedule"></div>
 
 <script>
   $(document).ready(function(){
@@ -39,4 +32,13 @@
       $("#countdown").html(html)
     }),1000);
   })
+</script>
+
+<script id="mus_schedule" type="text/x-mustache">
+
+  <span id="days">D:{{days}}</span>
+  <span id="hours">H:{{hours}}</span>
+  <span id="minutes">M:{{minutes}}</span>
+  <span id="seconds">S:{{seconds}}</span>
+
 </script>
