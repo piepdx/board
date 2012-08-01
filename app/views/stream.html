@@ -1,12 +1,20 @@
+<section id="activity" class="g688">
+  <ol id="events">
+    <!-- filled by mustache -->
+  </ol>
+</section>
+
+<section id="activity-preview" class="g1204">
+  <!-- preview of the top-most event -->
+</section>
+
 <!-- tweets-->
-<script id="mus_tweets" type="text/x-mustache">
-
+<script id="mus-event-tweet" type="text/x-mustache">
   {{#results}}
-  <div id="" class="s-thumbnail" >
-    {{&text2}}
-  </div>
+  <li class="event tweet">
+    <p class="content">{{&text2}}</p>
+  </li>
   {{/results}}
-
 </script>
 
 
@@ -14,7 +22,7 @@
 </div>
 <script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
 <script>
-  $(document).ready(function(){
+  var fetchInitialActivity = function(){
     $.ajax({
       url: "/api/tweets",
       dataType: 'json',
@@ -30,12 +38,19 @@
             }
           })
         }
-        var html = pie.mtoHtml("#mus_tweets", data);
+        var html = pie.mtoHtml("#mus-event-tweet", data);
         console.log(html)
-        $("#tweets").html(html)
+        $("#events").html(html)
         // be careful with this, we are limited/month
+        // we should re-issue the key, move the key to the development.json file.
         //$('#tweets').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
       }
     });
+  }
+
+  $(document).ready(function(){
+    try{Typekit.load({
+      active: fetchInitialActivity
+    });}catch(e){}
   })
 </script>
