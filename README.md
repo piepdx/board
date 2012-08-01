@@ -16,13 +16,14 @@ Overall design
 ------------------
 
 - The app listens to Twitter Stream , and Hubot (IRC).  
-   - The twitter stream gets Parsed using http://embed.ly to show images, etc.  
-   - Hubot listens for certain messages on IRC and then sends a message
+   - In the browser the twitter stream gets parsed using http://embed.ly to show images, etc.  
+   - On Server (node.js) Hubot listens for certain messages on IRC and then sends a message
         to browser via Sockets.io
-   - Each message type ("showimage", "addevent") has a handler (javascript) on the browser.
-        if you want to add your own, please do so.
-   
-   
+   - Each message type ("showimage", "addevent", etc) has a handler (javascript) on the browser.
+        if you want to add your own, please do so.  
+        An example plugin is here https://github.com/piepdx/board/blob/master/app/static/js/plugin.example.js
+
+
 
 
 Running

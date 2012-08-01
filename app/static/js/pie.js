@@ -1,5 +1,3 @@
-
-
 (function(win,doc) {
 
   var dloc = doc.location
@@ -12,7 +10,7 @@
     , plugins  = {}
 
   var pie = pie || {}
-  win.pie = pie;
+  win["pie"] = pie;
 
 
   /**
@@ -33,7 +31,8 @@
 
   /**
    * the pie plugin handler, this will allow you to listen for *pattern*
-   *  in hubot or twitter stream
+   *  in hubot or twitter stream and send to a custom js browser plugin
+   *  to determine how to display it
   */
   pie.addPlugin = function(name, pattern, handler) {
     // need to compile regex pattern?   
