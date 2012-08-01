@@ -1,44 +1,78 @@
-<!-- different sections, css determines layout -->
+<section id="masthead" class="g1204">
+  <h1 class="logo"><span>Portland Incubator Experiment</span></h1>
+  <dl class="stats" id="countdown">
+    <!-- filled by Mustache -->
+  </dl>
+  <p id="threat">until demo day.</p>
+</section>
 
-<div id="tbd"></div>
-<div id="countdown"></div>
-<div id="schedule"></div>
+<section id="timeline" class="g688">
+  <ol id="schedule">
+    <!-- filled by Mustache -->
+  </ol>
+</section>
 
-<script>
-  $(document).ready(function(){
-
-    // a CountDown function to calculate days, hours, minutes, seconds remaining
-    var makeCountDown = function(countDownDate, cb) {
-      var data = {days:0,hours:0,minutes:0,seconds:0}
-      , epochDate = new Date(countDownDate)
-      , epoch = epochDate.getTime()
-
-      return function() {
-        var today  = new Date()
-          , todayEpoch  = today.getTime()
-          , sd = (epoch - todayEpoch) / 1000
-
-        data.days = Math.floor(sd / (60*60*24) )
-        data.hours = Math.floor((sd / (60*60)) - (data.days * 24) )
-        data.minutes = Math.floor( ( sd / 60) - (data.days * 24 * 60) - (data.hours * 60))
-        data.seconds = Math.floor(sd - (data.days * 24 * 60 * 60) - (data.hours * 60 * 60) - (data.minutes * 60))
-
-        cb(data)
-      }
-    }
-    
-    setInterval(makeCountDown("5 October, 2012",function(data){
-      var html = pie.mtoHtml("#mus_schedule", data)
-      $("#countdown").html(html)
-    }),1000);
-  })
+<script id="mus-countdown" type="text/x-mustache">
+  <ol>
+    <li>
+      <dt>days</dt>
+      <dd id="days">{{ days }}</dd>
+    </li>
+    <li>
+      <dt>hours</dt>
+      <dd id="hours">{{ hours }}</dd>
+    </li>
+    <li>
+      <dt>minutes</dt>
+      <dd id="minutes">{{ minutes }}</dd>
+    </li>
+    <li>
+      <dt>seconds</dt>
+      <dd id="seconds">{{ seconds }}</dd>
+    </li>
+  </ol>
 </script>
 
-<script id="mus_schedule" type="text/x-mustache">
+<script id="mus-schedule-event" type="text/x-mustache">
+  <li class="event {{ classes }}">
+    <time class="timeago" datetime="{{ time_iso }}">{{ time_human }}</time>
+    <h3>{{ title }}</h3>
+    <p class="summary">{{ summary }}</p>
+  </li>
+</script>
 
-  <span id="days">D:{{days}}</span>
-  <span id="hours">H:{{hours}}</span>
-  <span id="minutes">M:{{minutes}}</span>
-  <span id="seconds">S:{{seconds}}</span>
+<script>
 
+  // a CountDown function to calculate days, hours, minutes, seconds remaining
+  var makeCountDown = function(countDownDate, cb) {
+    var data = {days:0,hours:0,minutes:0,seconds:0}
+    , epochDate = new Date(countDownDate)
+    , epoch = epochDate.getTime()
+
+    return function() {
+      var today  = new Date()
+        , todayEpoch  = today.getTime()
+        , sd = (epoch - todayEpoch) / 1000
+
+      data.days = Math.floor(sd / (60*60*24) )
+      data.hours = Math.floor((sd / (60*60)) - (data.days * 24) )
+      data.minutes = Math.floor( ( sd / 60) - (data.days * 24 * 60) - (data.hours * 60))
+      data.seconds = Math.floor(sd - (data.days * 24 * 60 * 60) - (data.hours * 60 * 60) - (data.minutes * 60))
+
+      cb(data)
+    }
+  }
+
+  $(document).ready(function(){
+    try{Typekit.load({
+      active: function(){
+        setInterval(makeCountDown("5 October, 2012 14:00:00",function(data){
+          var html = pie.mtoHtml("#mus-countdown", data)
+          $("#countdown").html(html)
+        }),1000)
+      }
+    });}catch(e){}
+    jQuery.timeago.settings.allowFuture = true;
+    jQuery("time.timeago").timeago();
+  })
 </script>

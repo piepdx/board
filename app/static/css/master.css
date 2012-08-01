@@ -1,0 +1,106 @@
+body {
+  background-color: #000;
+  /* like my soul */
+  color: #fff; }
+
+.main {
+  /* border: 1px solid #cfc; */
+  height: 1060px; }
+
+#masthead {
+  text-align: center;
+  margin-top: 160px; }
+  #masthead h1.logo {
+    background: url("/images/logo.png") no-repeat right top;
+    display: inline-block;
+    width: 322px;
+    height: 279px; }
+    #masthead h1.logo span {
+      display: none; }
+  #masthead #countdown {
+    margin-top: 200px; }
+    #masthead #countdown dt {
+      font-family: "adelle",serif;
+      font-size: 32px;
+      padding: 0 60px 0 60px;
+      display: block;
+      margin-bottom: -220px;
+      color: #7f9992; }
+    #masthead #countdown dd {
+      font-family: "adelle",serif;
+      font-size: 142px;
+      padding: 0 60px 0 60px;
+      width: 120px;
+      display: inline-block;
+      font-weight: bold; }
+    #masthead #countdown dd + dd {
+      margin-left: 60px; }
+    #masthead #countdown #days {
+      color: #666; }
+    #masthead #countdown #hours {
+      color: #888; }
+    #masthead #countdown #minutes {
+      color: #BBB; }
+    #masthead #countdown #seconds {
+      color: #FFF; }
+  #masthead #threat {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 60px; }
+
+/* Timeline stuff */
+#timeline {
+  border-left: 1px solid #555;
+  height: 100%; }
+
+ol#schedule {
+  list-style: none;
+  padding: 10px;
+  margin: 0px; }
+  ol#schedule li {
+    margin: 0px;
+    padding: 0px; }
+  ol#schedule li + li {
+    border-top: 1px solid #555;
+    padding-top: 10px;
+    margin-top: 10px; }
+  ol#schedule li.event h3 {
+    font-family: "adelle",serif;
+    font-size: 36px;
+    margin-bottom: 0px; }
+  ol#schedule li.event time {
+    font-family: "adelle",serif;
+    float: right;
+    font-size: 26px;
+    color: #777777; }
+  ol#schedule li.event .summary {
+    font-family: "myriad-pro",sans-serif;
+    font-size: 28px;
+    color: #7f9992; }
+  ol#schedule li.event.current h3 {
+    background: url("/images/event_flag.png") no-repeat left 10px;
+    padding-left: 60px;
+    margin-left: -24px; }
+  ol#schedule li.event.current time {
+    color: #e96f34;
+    font-weight: bold; }
+
+/* Inline statistics */
+dl.stats dt {
+  text-align: left;
+  margin-bottom: 6px;
+  padding: 0px 10px 0px 10px; }
+dl.stats dd {
+  display: inline;
+  padding: 0px 10px 0px 10px; }
+dl.stats dd + dd {
+  margin-left: 10px; }
+
+dl.stats > ol {
+  list-style: none; }
+
+dl.stats > ol > li {
+  display: inline-block;
+  text-align: left;
+  margin: 0px; }

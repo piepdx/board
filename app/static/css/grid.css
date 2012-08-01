@@ -1,0 +1,118 @@
+/*
+1920px grid system ~ Core CSS.
+22 columns ~ margin: 28px
+
+Based on the golden grid system - http://code.google.com/p/the-golden-grid/
+by Vladimir Carrer
+
+Created by the Grid System Generator - v1.00
+Learn more ~ http://www.gridsystemgenerator.com/
+*/
+
+/* =Containers
+--------------------------------------------------------------------------------*/
+.main
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 1920px;
+}
+
+/* =Grid >> Global
+--------------------------------------------------------------------------------*/
+.g86, .g172, .g258, .g344, .g430, .g516, .g602, .g688, .g774, .g860, .g946, .g1032, .g1118, .g1204, .g1290, .g1376, .g1462, .g1548, .g1634, .g1720, .g1806, .g1892 {
+	display: inline;
+	float: left;
+	margin-left: 28px;
+}
+
+/* =Grid >> 22 Columns
+--------------------------------------------------------------------------------*/
+.g86{width:58px;}
+.g172{width:144px;}
+.g258{width:230px;}
+.g344{width:316px;}
+.g430{width:402px;}
+.g516{width:488px;}
+.g602{width:574px;}
+.g688{width:660px;}
+.g774{width:746px;}
+.g860{width:832px;}
+.g946{width:918px;}
+.g1032{width:1004px;}
+.g1118{width:1090px;}
+.g1204{width:1176px;}
+.g1290{width:1262px;}
+.g1376{width:1348px;}
+.g1462{width:1434px;}
+.g1548{width:1520px;}
+.g1634{width:1606px;}
+.g1720{width:1692px;}
+.g1806{width:1778px;}
+.g1892{width:1864px;}
+
+
+/* =Grid >> 22 Columns - no left margin
+--------------------------------------------------------------------------------*/
+.ml86{margin-left:114px;}
+.ml172{margin-left:200px;}
+.ml258{margin-left:286px;}
+.ml344{margin-left:372px;}
+.ml430{margin-left:458px;}
+.ml516{margin-left:544px;}
+.ml602{margin-left:630px;}
+.ml688{margin-left:716px;}
+.ml774{margin-left:802px;}
+.ml860{margin-left:888px;}
+.ml946{margin-left:974px;}
+.ml1032{margin-left:1060px;}
+.ml1118{margin-left:1146px;}
+.ml1204{margin-left:1232px;}
+.ml1290{margin-left:1318px;}
+.ml1376{margin-left:1404px;}
+.ml1462{margin-left:1490px;}
+.ml1548{margin-left:1576px;}
+.ml1634{margin-left:1662px;}
+.ml1720{margin-left:1748px;}
+.ml1806{margin-left:1834px;}
+.ml1892{margin-left:1920px;}
+
+
+.inside{margin-left:0;}
+/* `Clear Floated Elements
+----------------------------------------------------------------------------------------------------*/
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+/* http://perishablepress.com/press/2008/02/05/lessons-learned-concerning-the-clearfix-css-hack */
+
+.clearfix:after {
+	clear: both;
+	content:' ';
+	display: block;
+	font-size: 0;
+	line-height: 0;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+.clearfix {
+	display: block;
+}
