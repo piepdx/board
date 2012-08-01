@@ -1,0 +1,126 @@
+body{
+  background-color: #000; /* like my soul */
+  color: #fff;
+}
+
+$color-green: #7F9992;
+$color-orange: #E96F34;
+$color-gray-dark: #777;
+
+.main{
+  /* border: 1px solid #cfc; */
+  height: 1060px;
+}
+
+#masthead{
+  text-align: center;
+  margin-top: 160px;
+
+  h1.logo{
+    background: url('/images/logo.png') no-repeat right top;
+    display: inline-block;
+    width: 322px;
+    height: 279px;
+    span{ display: none; }
+  }
+
+  #countdown{
+    $padding: 60px;
+    margin-top: 200px;
+    dt{
+      font-family: "adelle",serif; font-size: 32px;
+      padding: 0 $padding 0 $padding;
+      display: block;
+      margin-bottom: -220px;
+      color: $color-green;
+    }
+    dd{
+      font-family: "adelle",serif; font-size: 142px;
+      padding: 0 $padding 0 $padding;
+      width: 120px;
+      display: inline-block;
+      font-weight: bold;
+    }
+    dd + dd{ margin-left: $padding; }
+    #days{ color: #666; }
+    #hours{ color: #888; }
+    #minutes{ color: #BBB; }
+    #seconds{ color: #FFF; }
+  }
+
+  #threat{
+    font-family: "myriad-pro",sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 60px;
+  }
+
+}
+
+/* Timeline stuff */
+
+#timeline{
+  border-left: 1px solid #555;
+  height: 100%;
+}
+
+ol#schedule{
+  list-style: none;
+  padding: 10px;
+  margin: 0px;
+  li{ margin: 0px; padding: 0px; }
+  li + li{ border-top: 1px solid #555; padding-top: 10px; margin-top: 10px; }
+
+  li.event{
+    h3{
+      font-family: "adelle",serif; 
+      font-size: 36px;
+      margin-bottom: 0px;
+    }
+    time{ 
+      font-family: "adelle",serif; 
+      float: right; 
+      font-size: 26px; 
+      color: $color-gray-dark;
+    }
+    .summary{
+      font-family: "myriad-pro",sans-serif;
+      font-size: 28px;
+      color: $color-green;
+    }
+  }
+
+  li.event.current{
+    h3{
+      background: url('/images/event_flag.png') no-repeat left 10px;
+      padding-left: 60px;
+      margin-left: -24px;
+    }
+    time{ color: $color-orange; font-weight: bold; }
+  }
+}
+
+/* Inline statistics */
+dl.stats{
+  dt{
+    text-align: left;
+    margin-bottom: 6px;
+    padding: 0px 10px 0px 10px;
+  }
+
+  dd{
+    display: inline;
+    padding: 0px 10px 0px 10px;
+  }
+
+  dd + dd{
+    margin-left: 10px;
+  }
+}
+
+dl.stats > ol{ list-style: none; }
+dl.stats > ol > li{ 
+  display: inline-block; 
+  text-align: left; 
+  margin: 0px; 
+}
