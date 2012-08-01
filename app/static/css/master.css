@@ -49,6 +49,34 @@ body {
     font-weight: bold;
     margin-top: 60px; }
 
+/* Activity stuff */
+#activity {
+  border-right: 1px solid #555;
+  height: 100%; }
+
+#activity #events {
+  list-style: none;
+  padding: 10px;
+  margin: 0px; }
+  #activity #events li {
+    margin: 0px;
+    padding: 0px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #222222;
+    padding: 10px; }
+  #activity #events li + li {
+    padding-top: 10px;
+    margin-top: 10px; }
+  #activity #events li.event.tweet a {
+    color: #7f9992; }
+  #activity #events li.event.tweet p.content {
+    font-family: "adelle",serif;
+    font-size: 27px;
+    color: #fff;
+    margin: 0px; }
+
 /* Timeline stuff */
 #timeline {
   border-left: 1px solid #555;
