@@ -32,10 +32,20 @@ function mw(req,res,next){
   next()
 }
 
+connections = [];
 // hook up to socket.io
 io.sockets.on('connection', function (socket) {
-  // emit initial useless event
-  socket.emit('events', { event:"hello", text: 'hello world' });
+  // add to connections
+  connections.push(socket)
+  try{
+    socket.emit('events', { event:"hello", text: 'hello world' });
+  }catch(e){
+    console.log(e)
+  }
+  socket.on('disconnect', function () {
+    // TODO, remove this from connections!
+    
+  });
 });
 
 /*
@@ -60,8 +70,30 @@ var pieTwData = [];
 
 // this is a one time search for history of piepdx data
 twit.search('piepdx', {}, function(err, data) {
-  //console.log(data);
-  pieTwData = data
+  if (data.results) {
+    pieTwData = data.results
+  }
+  //console.log("found x tweets " + pieTwData.length)
+});
+twit.stream('statuses/filter', {'track':"piepdx"}, function(stream) {
+  stream.on('data', function (data) {
+    //console.log(data)
+    //console.log("after data")
+    //console.log(pieTwData)
+    try{
+      if (pieTwData.length > 9) {
+        pieTwData = pieTwData.slice(0,9)
+      }
+      pieTwData = [data].concat(pieTwData)
+      connections.forEach(function(socket){
+        console.log("about to send tweet to browser?")
+        socket.emit('events', { event:"tweet", data:pieTwData });
+      })
+    }catch(e){
+      console.log(e)
+    }
+   
+  });
 });
 /*
 https://github.com/AvianFlu/ntwitter

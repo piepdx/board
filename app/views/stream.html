@@ -10,11 +10,11 @@
 
 <!-- tweets-->
 <script id="mus-event-tweet" type="text/x-mustache">
-  {{#results}}
+  {{#data}}
   <li class="event tweet">
     <p class="content">{{&text2}}</p>
   </li>
-  {{/results}}
+  {{/data}}
 </script>
 
 
@@ -22,35 +22,50 @@
 </div>
 <script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
 <script>
-  var fetchInitialActivity = function(){
-    $.ajax({
-      url: "/api/tweets",
-      dataType: 'json',
-      success: function(data){
-        console.log(data)
-        if (data.results){
-          data.results.forEach(function(r){
-            if (r.text) {
-              r.text2 = twitterlib.expandLinks(r)
-              r.text2 = twitterlib.ify.link(r.text2)
-              //r.text2 = twitterlib.ify.at(r.text2)
-              //r.text2 = twitterlib.ify.hash(r.text2)
-            }
-          })
-        }
-        var html = pie.mtoHtml("#mus-event-tweet", data);
-        console.log(html)
-        $("#events").html(html)
-        // be careful with this, we are limited/month
-        // we should re-issue the key, move the key to the development.json file.
-        //$('#tweets').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
-      }
-    });
-  }
 
   $(document).ready(function(){
+    var displayTweets = function(data) {
+      //console.log(data)
+      if (data){
+        data.forEach(function(r){
+          if (r.text) {
+            r.text2 = twitterlib.expandLinks(r)
+            r.text2 = twitterlib.ify.link(r.text2)
+            //r.text2 = twitterlib.ify.at(r.text2)
+            //r.text2 = twitterlib.ify.hash(r.text2)
+          }
+        })
+      }
+      var html = pie.mtoHtml("#mus-event-tweet", {data:data});
+      //console.log(html)
+      $("#events").html(html)
+      // be careful with this, we are limited/month
+      // we should re-issue the key, move the key to the development.json file.
+      //$('#tweets').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
+    }
+    var fetchInitialActivity = function(){
+      $.ajax({
+        url: "/api/tweets",
+        dataType: 'json',
+        success: function(data){
+          displayTweets(data)
+        }
+      });
+    }
+
+    /**
+     *  Plugin for tweet updates
+    */
+    pie.addPlugin("tweet", function(data) {
+      //TODO:   visual effects for new tweets?
+      // TODO, only template new tweets
+      displayTweets(data.data)
+    })
+
     try{Typekit.load({
       active: fetchInitialActivity
     });}catch(e){}
   })
+
+
 </script>

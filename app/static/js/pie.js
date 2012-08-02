@@ -34,9 +34,9 @@
    *  in hubot or twitter stream and send to a custom js browser plugin
    *  to determine how to display it
   */
-  pie.addPlugin = function(name, pattern, handler) {
+  pie.addPlugin = function(pattern, handler) {
     // need to compile regex pattern?   
-    plugins[name] = {pattern:pattern,handler:handler}
+    plugins[pattern] = {pattern:pattern,handler:handler}
   }
 
   // mustache to html templating meomozing templates
