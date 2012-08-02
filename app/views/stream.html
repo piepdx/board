@@ -8,11 +8,11 @@
   <!-- preview of the top-most event -->
 </section>
 
-<!-- tweets-->
+<!-- tweets -->
 <script id="mus-event-tweet" type="text/x-mustache">
   {{#data}}
   <li class="event tweet">
-    <p class="content">{{&text2}}</p>
+    <p class="content"><span class="user">{{from_user}}</span>:  {{&text2}}</p>
   </li>
   {{/data}}
 </script>
@@ -24,24 +24,31 @@
 <script>
 
   $(document).ready(function(){
+
     var displayTweets = function(data) {
       //console.log(data)
       if (data){
         data.forEach(function(r){
+          
+          //r.user_name = r.user.screen_name
           if (r.text) {
             r.text2 = twitterlib.expandLinks(r)
             r.text2 = twitterlib.ify.link(r.text2)
             //r.text2 = twitterlib.ify.at(r.text2)
             //r.text2 = twitterlib.ify.hash(r.text2)
           }
+          if (r.user){
+            r.from_user = r.user.screen_name
+          }
         })
       }
+      console.log(data)
       var html = pie.mtoHtml("#mus-event-tweet", {data:data});
       //console.log(html)
       $("#events").html(html)
       // be careful with this, we are limited/month
       // we should re-issue the key, move the key to the development.json file.
-      //$('#tweets').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
+      $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
     }
     var fetchInitialActivity = function(){
       $.ajax({

@@ -66,6 +66,16 @@ hubot.on("msg",function(data){
 })
 */
 
+
+
+/*
+https://github.com/AvianFlu/ntwitter
+TODO:  
+  - send tweet stream messages one at a time (instead of resending entire list)
+  - allow hubot messages "twstream beer" to add new searches to tweet stream
+
+
+*/
 var pieTwData = [];
 
 // this is a one time search for history of piepdx data
@@ -95,26 +105,19 @@ twit.stream('statuses/filter', {'track':"piepdx"}, function(stream) {
    
   });
 });
-/*
-https://github.com/AvianFlu/ntwitter
-TODO:  
-  - listen to tweet stream 
-  - allow hubot messages "twstream beer" to add new searches to tweet stream
-function twitterListener(){
-  twit.stream('statuses/filter', {'track':"piepdx", locations':'-122.75,36.8,-121.75,37.8,-74,40,-73,41'}, function(stream) {
-    stream.on('data', function (data) {
-      console.log(data);
-    });
-  });
-}
 
-*/
 
 app.get('/api/tweets', mw, function(req, res) {
   res.contentType('application/json');
   res.send(pieTwData);
 });
-
+app.post('/events/update', mw, function(req, res) {
+  connections.forEach(function(socket){
+      console.log("about to send update to browser?")
+      socket.emit('events', { event:"update", data:[] });
+    })
+  res.send("ok");
+});
 app.get('/schedule', mw, function(req, res) {
   //res.render("dash", pl.extend(req.context,{}) );
   util.log(util.inspect(req.context))

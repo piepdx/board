@@ -65,12 +65,21 @@ body {
     -moz-border-radius: 5px;
     border-radius: 5px;
     background-color: #222222;
-    padding: 10px; }
+    padding: 10px; 
+    position:relative;}
   #activity #events li + li {
     padding-top: 10px;
     margin-top: 10px; }
   #activity #events li.event.tweet a {
     color: #7f9992; }
+  #activity #events li.event.tweet p.content img {
+    position:absolute;
+    left:700px; }
+  #activity #events li.event.tweet p.content span.user {
+    font-family: "adelle",serif;
+    font-size: 30px;
+    color: #7f9992;
+    margin: 0px; }
   #activity #events li.event.tweet p.content {
     font-family: "adelle",serif;
     font-size: 27px;
