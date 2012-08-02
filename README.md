@@ -41,6 +41,6 @@ contains valid twitter oauth credentials::
 
     # or install and run w https://github.com/isaacs/node-supervisor/
     npm install -g supervisor
-    supervisor -w app.js,routes,lib  app.js
+    supervisor -w app.js,routes,lib,scripts app.js
 
 

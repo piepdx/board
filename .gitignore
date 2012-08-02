@@ -1,2 +1,6 @@
 .DS_Store
 .sass-cache
+development.json
+manifest.yml
+node_modules/
+PRIVATE

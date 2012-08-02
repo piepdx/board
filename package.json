@@ -1,12 +1,16 @@
  {
     "name":"piepdxb1"
     , "version":"0.0.1"
-    , "scripts": {"preinstall": "npm install -g supervisor"}
     , "dependencies":{
       "express":"2.5.x"
       , "socket.io":""
       , "cookie-sessions":""
       , "ejs":""
       , "ntwitter":""
+      , "irc":""
+    },
+    "engines": {
+      "node": "0.6.x",
+      "npm": "1.1.x"
     }
  }

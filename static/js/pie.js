@@ -25,7 +25,6 @@
           o.handler(data)
         }
       })
-      //socket.emit('my other event', { my: 'data' });
     });
   }
 
@@ -34,12 +33,12 @@
    *  in hubot or twitter stream and send to a custom js browser plugin
    *  to determine how to display it
   */
-  pie.addPlugin = function(name, pattern, handler) {
+  pie.addPlugin = function(pattern, handler) {
     // need to compile regex pattern?   
-    plugins[name] = {pattern:pattern,handler:handler}
+    plugins[pattern] = {pattern:pattern,handler:handler}
   }
 
-  // mustache to html templating meomozing templates
+  // mustache to html templating meomoizing templates
   pie.mtoHtml = function(name,data) {
     try {
       if (!(name in templates)){
@@ -57,5 +56,10 @@
     return ""
   }
 
+  //force update of browser, in case of new version on server
+  pie.addPlugin("update", function(data) {
+    // update
+    location.reload();
+  })
 
 }(window,document));

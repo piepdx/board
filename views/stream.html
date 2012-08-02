@@ -1,0 +1,94 @@
+<section id="activity" class="g688">
+  <ol id="events">
+    <!-- filled by mustache -->
+  </ol>
+</section>
+
+<section id="activity-preview" class="g1204">
+  <!-- preview of the top-most event -->
+</section>
+
+<!-- tweets -->
+<script id="mus-event-tweet" type="text/x-mustache">
+  {{#data}}
+  <li class="event tweet">
+    <p class="content"><span class="user">{{from_user}}</span>:  {{&text2}}</p>
+  </li>
+  {{/data}}
+</script>
+
+<script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
+<script>
+  $(document).ready(function(){
+    var playList = {};
+
+    var displayTweets = function(data) {
+      var events = []
+
+      function displayMedia(){
+        if (displayMedia.scheduled) return
+        displayMedia.scheduled = true
+        setTimeout(function(){
+          $('#activity-preview').html("")
+          if(events.length > 0){
+            if (events[0].type == "video" && !(events[0].url in playList) ) {
+              playList[events[0].url] = true
+              $('#activity-preview').html(events[0].code)
+            } else if (events[0].type != "video" ) {
+              $('#activity-preview').html(events[0].code)
+            }
+          }
+        },100)
+      }
+
+      if (data){
+        data.forEach(function(r){
+          if (r.text) {
+            r.text2 = twitterlib.expandLinks(r)
+            r.text2 = twitterlib.ify.link(r.text2)
+            //r.text2 = twitterlib.ify.at(r.text2)
+            //r.text2 = twitterlib.ify.hash(r.text2)
+          }
+          if (r.user){
+            r.from_user = r.user.screen_name
+          }
+        })
+      }
+      console.log(data)
+      var html = pie.mtoHtml("#mus-event-tweet", {data:data});
+      $("#events").html(html)
+      // be careful with this, we are limited/month
+      // we should re-issue the key, move the key to the development.json file.
+      $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11", autoplay:true, width: 1150, success:function(d,d2){
+        console.log(arguments)
+        if (d.code) events.push(d)
+        displayMedia()
+      }});
+    }
+    
+    var fetchInitialActivity = function(){
+      $.ajax({
+        url: "/api/tweets",
+        dataType: 'json',
+        success: function(data){
+          displayTweets(data)
+        }
+      });
+    }
+
+    /**
+     *  Plugin for tweet updates
+    */
+    pie.addPlugin("tweet", function(data) {
+      //TODO:   visual effects for new tweets?
+      // TODO, only template new tweets
+      displayTweets(data.data)
+    })
+
+    try{Typekit.load({
+      active: fetchInitialActivity
+    });}catch(e){}
+  })
+
+
+</script>
