@@ -17,14 +17,24 @@ config = {
 }
 
 function loadConfig() {
-  var env = process.env.NODE_ENV || 'development'
-    , data = fs.readFileSync('./' + env + '.json')
+  var env = process.env
   
-  try {
-    config = JSON.parse(data);
-  } catch (err) {
-    console.log('There has been an error parsing your config.JSON.')
-    console.log(err);
+  if (env.NODE_ENV == 'development'){
+    // desktop dev
+    var data = fs.readFileSync('./' + env + '.json')
+    try {
+      config = JSON.parse(data);
+    } catch (err) {
+      console.log('There has been an error parsing your config.JSON.')
+      console.log(err);
+    }
+  } else {
+    // heroku
+    config.secretkey = env.APPSECRET
+    config.twitter.consumerkey = env.TW_CONSUMERKEY
+    config.twitter.consumersecret = env.TW_SECRET
+    config.twitter.accesskey = env.TW_ACCESSKEY
+    config.twitter.accesssecret = env.TW_ACCESSSECRET
   }
 }
 
