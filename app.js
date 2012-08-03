@@ -58,4 +58,6 @@ app.configure('development', function(){
 // load the route controllers, the whole folder of them...
 require('./routes');
 
-app.listen(process.env.VCAP_APP_PORT || 3000);
+//console.log("about to start")
+app.listen(process.env.PORT || 3000);
+//console.log("after start")

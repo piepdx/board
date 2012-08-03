@@ -33,21 +33,23 @@ function mw(req,res,next){
 }
 
 connections = [];
-// hook up to socket.io
-io.sockets.on('connection', function (socket) {
-  // add to connections
-  connections.push(socket)
-  try{
-    socket.emit('events', { event:"hello", text: 'hello world' });
-  }catch(e){
-    console.log(e)
-  }
-  socket.on('disconnect', function () {
-    // TODO, remove this from connections!
-    
+try {
+  // hook up to socket.io
+  io.sockets.on('connection', function (socket) {
+    // add to connections
+    connections.push(socket)
+    try{
+      socket.emit('events', { event:"hello", text: 'hello world' });
+    }catch(e){
+      console.log(e)
+    }
+    socket.on('disconnect', function () {
+      // TODO, remove this from connections!
+    });
   });
-});
-
+} catch(e){
+  console.log(e)
+}
 /*
 TODO:  connect and listen to HUBOT and send messages to browser
     HUBOT to get hooked up to our IRC
@@ -62,11 +64,8 @@ hubot.on("msg",function(data){
     // send to browser
     socket.emit('event', { event:"hello", text: 'hello world' });
   }
-  
 })
 */
-
-
 
 /*
 https://github.com/AvianFlu/ntwitter
@@ -77,36 +76,38 @@ TODO:
 
 */
 var pieTwData = [];
-
-// this is a one time search for history of piepdx data
-twit.search('piepdx', {}, function(err, data) {
-  if (data.results) {
-    pieTwData = data.results
-  }
-  //console.log("found x tweets " + pieTwData.length)
-});
-twit.stream('statuses/filter', {'track':"piepdx"}, function(stream) {
-  stream.on('data', function (data) {
-    //console.log(data)
-    //console.log("after data")
-    //console.log(pieTwData)
-    try{
-      if (pieTwData.length > 9) {
-        pieTwData = pieTwData.slice(0,9)
-      }
-      pieTwData = [data].concat(pieTwData)
-      connections.forEach(function(socket){
-        console.log("about to send tweet to browser?")
-        socket.emit('events', { event:"tweet", data:pieTwData });
-      })
-    }catch(e){
-      console.log(e)
+try {
+  // this is a one time search for history of piepdx data
+  twit.search('piepdx', {}, function(err, data) {
+    if (data.results) {
+      pieTwData = data.results
     }
-   
+    //console.log("found x tweets " + pieTwData.length)
   });
-});
-
-
+  twit.stream('statuses/filter', {'track':"piepdx"}, function(stream) {
+    stream.on('data', function (data) {
+      //console.log(data)
+      //console.log("after data")
+      //console.log(pieTwData)
+      try{
+        if (pieTwData.length > 9) {
+          pieTwData = pieTwData.slice(0,9)
+        }
+        pieTwData = [data].concat(pieTwData)
+        connections.forEach(function(socket){
+          console.log("about to send tweet to browser?")
+          socket.emit('events', { event:"tweet", data:pieTwData });
+        })
+      }catch(e){
+        console.log(e)
+      }
+     
+    });
+  });
+}catch(e){
+  console.log("error on twitter ")
+  console.log(e)
+}
 app.get('/api/tweets', mw, function(req, res) {
   res.contentType('application/json');
   res.send(pieTwData);
