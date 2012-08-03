@@ -120,7 +120,7 @@ app.get('/api/tweets', mw, function(req, res) {
 // 
 app.post('/api/internal/restart', mw, function(req, res) {
   var n = req.param("name")
-  iosocket.restart()
+  iosocket.connect()
   res.send("ok");
 });
 app.post('/api/message', mw, function(req, res) {
