@@ -69,6 +69,7 @@ function iosock() {
   return sock
 }
 
+//global iosocket
 iosocket = iosock().connect()
 
 
@@ -83,7 +84,7 @@ TODO:
 var pieTwData = [];
 try {
   // this is a one time search for history of piepdx data
-  twit.search('piepdx', {}, function(err, data) {
+  twit.search(config.track, {}, function(err, data) {
     if (data.results) {
       pieTwData = data.results
     }
