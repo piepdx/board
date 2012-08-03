@@ -19,9 +19,9 @@ config = {
 function loadConfig() {
   var env = process.env
   
-  if (env.NODE_ENV == 'development'){
+  if (!env.NODE_ENV || env.NODE_ENV == 'development'){
     // desktop dev
-    var data = fs.readFileSync('./' + env + '.json')
+    var data = fs.readFileSync('./development.json')
     try {
       config = JSON.parse(data);
     } catch (err) {
