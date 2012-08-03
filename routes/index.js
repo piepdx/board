@@ -3,7 +3,7 @@ var fs = require('fs')
   , sessions = require('cookie-sessions')
   , twitter = require('ntwitter')
   , pl = require('../lib/pl.js')
-
+  , bot = require('../scripts/bots.js').tvbot
 
 // twitter client  https://github.com/AvianFlu/ntwitter
 var twit = new twitter({
@@ -32,40 +32,45 @@ function mw(req,res,next){
   next()
 }
 
-connections = [];
-try {
-  // hook up to socket.io
-  io.sockets.on('connection', function (socket) {
-    // add to connections
-    connections.push(socket)
-    try{
-      //socket.emit('events', { event:"hello", text: 'hello world' });
-    }catch(e){
-      console.log(e)
-    }
-    socket.on('disconnect', function () {
-      // TODO, remove this from connections!
-    });
-  });
-} catch(e){
-  console.log(e)
-}
-/*
-TODO:  connect and listen to HUBOT and send messages to browser
-    HUBOT to get hooked up to our IRC
+function iosock() {
+  var connections = [];
+  function sock() {
 
-hubot.on("msg",function(data){
-  
-  if (data.event == "twstream") {
-    // lets add a new twitter listener for this search term
-    // and restart twitter stream listening
-    twitterListener()
-  } else {
-    // send to browser
-    socket.emit('event', { event:"hello", text: 'hello world' });
   }
-})
-*/
+
+  sock.connect = function(){
+    connections = []
+    try {
+      // hook up to socket.io
+      io.sockets.on('connection', function (socket) {
+        // add to connections
+        connections.push(socket)
+        try{
+          //socket.emit('events', { event:"hello", text: 'hello world' });
+        }catch(e){
+          util.log(e)
+        }
+        socket.on('disconnect', function () {
+          // TODO, remove this from connections!
+          //connections = connections.filter(function(s){return s === socket})
+        });
+      });
+    } catch(e){
+      util.log(e)
+    }
+    return sock
+  }
+  sock.emit = function (name, msg) {
+    connections.forEach(function(socket){
+      util.log("about to send msg to browser?" + name)
+      socket.emit(name,msg);
+    })
+  }
+  return sock
+}
+
+iosocket = iosock().connect()
+
 
 /*
 https://github.com/AvianFlu/ntwitter
@@ -94,10 +99,7 @@ try {
           pieTwData = pieTwData.slice(0,9)
         }
         pieTwData = [data].concat(pieTwData)
-        connections.forEach(function(socket){
-          console.log("about to send tweet to browser?")
-          socket.emit('events', { event:"tweet", data:pieTwData });
-        })
+        iosocket.emit('events', { event:"tweet", data:pieTwData })
       }catch(e){
         console.log(e)
       }
@@ -108,10 +110,31 @@ try {
   console.log("error on twitter ")
   console.log(e)
 }
+
+
 app.get('/api/tweets', mw, function(req, res) {
   res.contentType('application/json');
   res.send(pieTwData);
 });
+// 
+app.post('/api/internal/restart', mw, function(req, res) {
+  var n = req.param("name")
+  iosocket.restart()
+  res.send("ok");
+});
+app.post('/api/message', mw, function(req, res) {
+  //util.log(req.body.m)
+  var m = req.body.m
+  //util.log(config.botname)
+  //util.log(m.indexOf("tvbot"))
+  if (m.indexOf(config.botname+" ") == 0) {
+    m = m.substring(config.botname.length + 1)
+    util.log("found bot message '" + m + "'")
+    bot.msg(m)
+  }
+  res.send("ok");
+});
+
 app.post('/events/update', mw, function(req, res) {
   connections.forEach(function(socket){
       console.log("about to send update to browser?")
@@ -119,6 +142,7 @@ app.post('/events/update', mw, function(req, res) {
     })
   res.send("ok");
 });
+
 app.get('/schedule', mw, function(req, res) {
   //res.render("dash", pl.extend(req.context,{}) );
   util.log(util.inspect(req.context))
@@ -130,3 +154,5 @@ app.get('/', mw, function(req, res) {
   util.log(util.inspect(req.context))
   res.render("stream", req.context);
 });
+
+
