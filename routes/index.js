@@ -92,7 +92,7 @@ try {
   });
   twit.stream('statuses/filter', {'track':config.track}, function(stream) {
     stream.on('data', function (data) {
-      console.log(data)
+      //console.log(data)
       //console.log("after data")
       //console.log(pieTwData)
       try{
@@ -119,7 +119,8 @@ app.get('/api/tweets', mw, function(req, res) {
 });
 // 
 app.post('/api/internal/restart', mw, function(req, res) {
-  var n = req.param("name")
+  //var n = req.param("name")
+  // Restart the socket.io connection in case it drops
   iosocket.connect()
   res.send("ok");
 });
