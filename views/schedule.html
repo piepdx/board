@@ -41,7 +41,20 @@
   </li>
 </script>
 
+<script type="text/javascript" src="/js/soundmanager2.js"></script>
 <script>
+
+  var countdownSound = null;
+
+  soundManager.setup({
+    url: '/swf/',
+    onready: function(){ 
+      countdownSound = soundManager.createSound({
+        id: 'countSound',
+        url: '/audio/countdown.mp3'
+      });
+    },
+  });
 
   // a CountDown function to calculate days, hours, minutes, seconds remaining
   var makeCountDown = function(countDownDate, cb) {
@@ -66,8 +79,13 @@
   $(document).ready(function(){
     try{Typekit.load({
       active: function(){
-        setInterval(makeCountDown("5 October, 2012 14:00:00",function(data){
-          var html = pie.mtoHtml("#mus-countdown", data)
+        setInterval(makeCountDown("5 October, 2012 14:00:00",function(timeRemaining){
+          // play countdown in last eight seconds
+          if(timeRemaining.minutes == 0 && timeRemaining.seconds == 8 && countdownSound){
+            countdownSound.play();
+          }
+          // update the display
+          var html = pie.mtoHtml("#mus-countdown", timeRemaining)
           $("#countdown").html(html)
         }),1000)
       }
