@@ -107,6 +107,9 @@ function twitterConn(){
         if (data.results) {
           pieTwData = data.results
         }
+        if (err) {
+          util.log(err)
+        }
       });
 
       // twitter stream
@@ -119,11 +122,11 @@ function twitterConn(){
           //console.log(pieTwData)
           util.log("found tweet: ")
           try{
-            if (pieTwData.length > 9) {
-              pieTwData = pieTwData.slice(0,9)
-            }
-            pieTwData = [data].concat(pieTwData)
-            iosocket.emit('events', { event:"tweet", data:pieTwData })
+            //if (pieTwData.length > 9) {
+            //  pieTwData = pieTwData.slice(0,9)
+            //}
+            //pieTwData = [data].concat(pieTwData)
+            iosocket.emit('events', { event:"tweet", data:[data] })
           }catch(e){
             console.log(e)
           }
@@ -149,6 +152,12 @@ function twitterConn(){
 twconn = twitterConn().connect()
 
 
+bot.send(function(data){
+  util.log("in send for bot->iosocket")
+  util.log(util.inspect(data))
+  iosocket.emit('events', { event:"irc", data:[data] })
+})
+
 app.get('/api/tweets', mw, function(req, res) {
   res.contentType('application/json');
   res.send(pieTwData);
@@ -169,7 +178,9 @@ app.post('/api/message', mw, function(req, res) {
   if (m.indexOf(config.botname+" ") == 0) {
     m = m.substring(config.botname.length + 1)
     util.log("found bot message '" + m + "'")
-    bot.msg(m)
+    bot.msg("frombot", m)
+  } else {
+    util.log("not found")
   }
   res.send("ok");
 });

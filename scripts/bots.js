@@ -14,18 +14,36 @@ client.addListener('message', function (from, to, message) {
 
 function makeBot(name){
 
-  var msgcb = function(){}
+  var sender = function(){}
     , defcb = function(){}
     , msgs = []
     , found
+    , ircClient 
   function bot(){
+  }
+  /**
+   *  connect to irc
+  */
+  bot.connect = function(cb){
+    try {
+      if (ircClient) ircClient.disconnect()
+    } catch(e) {}
+    ircClient = new irc.Client('chat.freenode.net', config.botname, {
+        channels: ['#piepdx'],
+    });
+
+    ircClient.addListener('message', function (from, to, message) {
+        util.log(from + ' => ' + to + ': ' + message)
+        bot.msg(from, message)
+    });
+    return bot
   }
   /**
    *  The send function, for when it finds a message
   */
   bot.send = function(cb){
-    if (!arguments.length) return msgcb;
-    msgcb = cb
+    if (!arguments.length) return sender;
+    sender = cb
     return bot
   }
   /**
@@ -36,37 +54,47 @@ function makeBot(name){
     defcb = cb
     return bot
   }
+  /**
+   *   .on(function(rematch, from, msg){
+   *      return {from_user:from,text:msg}
+   *    })
+  */
   bot.on = function(re, cb){
     msgs.push({re:re,cb:cb})
     return bot
   }
-  bot.msg = function(m){
+  bot.msg = function(from, m){
     var matched = false
       , themsg = null
     msgs.forEach(function(msg){
       found = m.match(msg.re)
       if (found){
-        themsg = msg.cb(found, m)
-      } else {
-        util.log("not found" + msg.re)
-      }
+        themsg = msg.cb(found, from, m)
+        matched = true
+      } 
     })
     if (!matched){
-      themsg = defcb(null, m)
+      themsg = defcb(null,from, m)
     }
-    msgcb(themsg)
+    sender(themsg)
     return bot
   }
   return bot
 }
 
 // make global tvbot 
-var tvbot = makeBot("tvbot")
+var tvbot = makeBot("tvbot").connect()
 exports.tvbot = tvbot
 
-tvbot.on(RegExp(/ascii( me)? (.+)/i),function(re, m){
+// the default response
+tvbot.default(function(re, from, msg){
+  util.log("creating default msg")
+  return {from_user:from, text:msg}
+})
+
+tvbot.on(RegExp(/ascii( me)? (.+)/i),function(re, from, m){
   util.log(re)
-  return "ascii me"
+  return {from_user:from, text: "ascii me"}
 })
 /*
 tvbot.send(RegExp(/ascii( me)? (.+)/i),function(re, m){

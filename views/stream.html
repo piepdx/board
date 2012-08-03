@@ -28,6 +28,7 @@
       function displayMedia(){
         if (displayMedia.scheduled) return
         displayMedia.scheduled = true
+        //var liCt = 0
         setTimeout(function(){
           $('#activity-preview').html("")
           if(events.length > 0){
@@ -38,6 +39,10 @@
               $('#activity-preview').html(events[0].code)
             }
           }
+          $("#events li").each(function(i,e){
+            if (i > 10) $(e).remove()
+          })
+          $("#events li").addClass("processed")
         },100)
       }
 
@@ -56,10 +61,10 @@
       }
       console.log(data)
       var html = pie.mtoHtml("#mus-event-tweet", {data:data});
-      $("#events").html(html)
+      $("#events").prepend(html)
       // be careful with this, we are limited/month
       // we should re-issue the key, move the key to the development.json file.
-      $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11", autoplay:true, width: 1150, success:function(d,d2){
+      $('#events li:not(.processed)').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11", autoplay:true, width: 1150, success:function(d,d2){
         console.log(arguments)
         if (d.code) events.push(d)
         displayMedia()
@@ -80,8 +85,12 @@
      *  Plugin for tweet updates
     */
     pie.addPlugin("tweet", function(data) {
-      //TODO:   visual effects for new tweets?
-      // TODO, only template new tweets
+      displayTweets(data.data)
+    })
+    /**
+     *  Plugin for irc
+    */
+    pie.addPlugin("irc", function(data) {
       displayTweets(data.data)
     })
 
