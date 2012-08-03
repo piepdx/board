@@ -39,7 +39,7 @@ try {
     // add to connections
     connections.push(socket)
     try{
-      socket.emit('events', { event:"hello", text: 'hello world' });
+      //socket.emit('events', { event:"hello", text: 'hello world' });
     }catch(e){
       console.log(e)
     }
