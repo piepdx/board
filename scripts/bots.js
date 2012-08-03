@@ -31,7 +31,7 @@ function makeBot(name){
   /**
    *  The default callback
   */
-  bot.defcb = function(cb){
+  bot.default = function(cb){
     if (!arguments.length) return defcb;
     defcb = cb
     return bot
