@@ -42,14 +42,14 @@
       }
       console.log(data)
       var html = pie.mtoHtml("#mus-event-tweet", {data:data});
-      //console.log(html)
       $("#events").html(html)
+
       // be careful with this, we are limited/month
       // we should re-issue the key, move the key to the development.json file.
       var events = []
       $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11", autoplay:true, success:function(d,d2){
         console.log(arguments)
-        if (d.html) {events.push(d)}
+        if (d.code) events.push(d)
       }});
       // gorious hack
       setTimeout(function(){
@@ -57,9 +57,9 @@
         if(events.length > 0){
           if (events[0].type == "video" && !(events[0].url in playList) ) {
             playList[events[0].url] = true
-            $('#activity-preview').html(events[0].html)
+            $('#activity-preview').html(events[0].code)
           } else if (events[0].type != "video" ) {
-            $('#activity-preview').html(events[0].html)
+            $('#activity-preview').html(events[0].code)
           }
         }
       },4000)
