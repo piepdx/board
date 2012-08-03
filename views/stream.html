@@ -58,7 +58,7 @@
           if (events[0].type == "video" && !(events[0].url in playList) ) {
             playList[events[0].url] = true
             $('#activity-preview').html(events[0].html)
-          } else {
+          } else if (events[0].type != "video" ) {
             $('#activity-preview').html(events[0].html)
           }
         }
