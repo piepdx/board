@@ -117,6 +117,7 @@ function twitterConn(){
           //console.log(data)
           //console.log("after data")
           //console.log(pieTwData)
+          util.log("found tweet: ")
           try{
             if (pieTwData.length > 9) {
               pieTwData = pieTwData.slice(0,9)
