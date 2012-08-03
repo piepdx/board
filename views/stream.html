@@ -45,15 +45,17 @@
       $("#events").html(html)
       // be careful with this, we are limited/month
       // we should re-issue the key, move the key to the development.json file.
-      $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
+      var events = []
+      $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11", autoplay:true, success:function(d,d2){
+        console.log(arguments)
+        if (d.html) {events.push(d)}
+      }});
       // gorious hack
       setTimeout(function(){
-        $('#events div.embed:first').each(function(i,e){
-          console.log(e)
-          $("#activity-preview").empty().append(e)
-        })
-        $('#events div.embed').remove()
-      },2000)
+        if(events.length > 0){
+          $('#activity-preview').html(events[events.length - 1].html)
+        }
+      },4000)
     }
     var fetchInitialActivity = function(){
       $.ajax({
