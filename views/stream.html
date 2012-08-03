@@ -21,6 +21,7 @@
 <script>
 
   $(document).ready(function(){
+    var playList = {};
 
     var displayTweets = function(data) {
       //console.log(data)
@@ -53,7 +54,10 @@
       // gorious hack
       setTimeout(function(){
         if(events.length > 0){
-          $('#activity-preview').html(events[0].html)
+          if (!(events[0].url in playList) ) {
+            playList[events[0].url]
+            $('#activity-preview').html(events[0].html)
+          }
         }
       },4000)
     }
