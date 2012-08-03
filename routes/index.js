@@ -149,8 +149,6 @@ function twitterConn(){
 twconn = twitterConn().connect()
 
 
-
-
 app.get('/api/tweets', mw, function(req, res) {
   res.contentType('application/json');
   res.send(pieTwData);
@@ -161,7 +159,7 @@ app.post('/api/internal/restart', mw, function(req, res) {
   // Restart the socket.io connection in case it drops
   iosocket.connect()
   twconn.connect()
-  res.send("ok");
+  res.send("restarted?");
 });
 app.post('/api/message', mw, function(req, res) {
   //util.log(req.body.m)
