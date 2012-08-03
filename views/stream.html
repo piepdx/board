@@ -17,9 +17,6 @@
   {{/data}}
 </script>
 
-
-<div id="tweets">
-</div>
 <script src="http://scripts.embed.ly/jquery.embedly.min.js"></script>
 <script>
 
@@ -49,6 +46,14 @@
       // be careful with this, we are limited/month
       // we should re-issue the key, move the key to the development.json file.
       $('#events').embedly({key: "2046ddd0c25a4da59c0ae73d3d5c4d11"});
+      // gorious hack
+      setTimeout(function(){
+        $('#events div.embed:first').each(function(i,e){
+          console.log(e)
+          $("#activity-preview").empty().append(e)
+        })
+        $('#events div.embed').remove()
+      },2000)
     }
     var fetchInitialActivity = function(){
       $.ajax({

@@ -72,9 +72,12 @@ body {
     margin-top: 10px; }
   #activity #events li.event.tweet a {
     color: #7f9992; }
+    /*
   #activity #events li.event.tweet p.content img {
     position:absolute;
-    left:700px; }
+    left:700px;
+    }
+    */
   #activity #events li.event.tweet p.content span.user {
     font-family: "adelle",serif;
     font-size: 30px;
