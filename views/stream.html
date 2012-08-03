@@ -55,7 +55,7 @@
       setTimeout(function(){
         if(events.length > 0){
           if (!(events[0].url in playList) ) {
-            playList[events[0].url]
+            playList[events[0].url] = true
             $('#activity-preview').html(events[0].html)
           }
         }
