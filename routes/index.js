@@ -89,9 +89,9 @@ try {
     }
     //console.log("found x tweets " + pieTwData.length)
   });
-  twit.stream('statuses/filter', {'track':"piepdx"}, function(stream) {
+  twit.stream('statuses/filter', {'track':config.track}, function(stream) {
     stream.on('data', function (data) {
-      //console.log(data)
+      console.log(data)
       //console.log("after data")
       //console.log(pieTwData)
       try{
@@ -136,10 +136,7 @@ app.post('/api/message', mw, function(req, res) {
 });
 
 app.post('/events/update', mw, function(req, res) {
-  connections.forEach(function(socket){
-      console.log("about to send update to browser?")
-      socket.emit('events', { event:"update", data:[] });
-    })
+  iosocket.emit('events', { event:"update", data:[] })
   res.send("ok");
 });
 

@@ -8,6 +8,7 @@ var express = require('express')
 config = {
     name:"piepdxb1"
     , botname: "tvbot"
+    , track: "piepdx"
     , secretkey:"25rt56g"
     , twitter : {
       consumerkey:"key"
