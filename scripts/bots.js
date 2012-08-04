@@ -32,9 +32,15 @@ function makeBot(name){
         channels: ['#piepdx'],
     });
 
-    ircClient.addListener('message', function (from, to, message) {
-        util.log(from + ' => ' + to + ': ' + message)
-        bot.msg(from, message)
+    ircClient.addListener('message', function (from, to, m) {
+      util.log(from + ' => ' + to + ': ' + m)
+      if (m.indexOf(config.botname+" ") == 0) {
+        m = m.substring(config.botname.length + 1)
+        bot.msg("frombot", m)
+      } else if (m.indexOf("slice ") == 0) {
+        m = m.substring("slice ")
+        bot.msg("frombot", m)
+      }
     });
     return bot
   }
