@@ -76,8 +76,7 @@ iosocket = iosock().connect()
 /*
 https://github.com/AvianFlu/ntwitter
 TODO:  
-  - send tweet stream messages one at a time (instead of resending entire list)
-  - allow hubot messages "twstream beer" to add new searches to tweet stream
+  - fix reconnect/restart
 
 
 */
@@ -135,10 +134,12 @@ function twitterConn(){
         stream.on('end', function (response) {
           // Handle a disconnection
           streamConnected = false
+          strm = null
         });
         stream.on('destroy', function (response) {
           // Handle a 'silent' disconnection from Twitter, no end/error event fired
           streamConnected = false
+          strm = null
         });
       });
     } catch(e){
