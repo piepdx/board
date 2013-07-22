@@ -3,7 +3,7 @@
   <dl class="stats" id="countdown">
     <!-- filled by Mustache -->
   </dl>
-  <p id="threat">until application day.</p>
+  <p id="threat">until demo day.</p>
 </section>
 
 <section id="timeline" class="g688">
@@ -79,7 +79,7 @@
   $(document).ready(function(){
     try{Typekit.load({
       active: function(){
-        setInterval(makeCountDown("2 March, 2013 00:00:00",function(timeRemaining){
+        setInterval(makeCountDown("11 October, 2013 14:00:00",function(timeRemaining){
           // play countdown in last eight seconds
           if(timeRemaining.minutes == 0 && timeRemaining.seconds == 8 && countdownSound){
             countdownSound.play();

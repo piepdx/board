@@ -103,7 +103,7 @@ function twitterConn(){
     try {
       // this is a one time search for history of piepdx data
       twit.search(config.track, {}, function(err, data) {
-        if (data.results) {
+        if (data && data.results) {
           pieTwData = data.results
         }
         if (err) {
